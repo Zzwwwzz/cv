@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-// -----------------------------
-// EDIT THESE to personalize
-// -----------------------------
+// --- EDIT HERE ---
 const PROFILE = {
   name: "Etunimi Sukunimi",
   role: "Ohjelmistokehittäjä (Full‑Stack)",
@@ -14,7 +11,7 @@ const PROFILE = {
   linkedin: "https://linkedin.com/in/username",
   github: "https://github.com/username",
   summary:
-    "Ratkaisukeskeinen kehittäjä, joka tykkää selkeästä koodista, käytettävyydestä ja nopeista julkaisuista.",
+    "Ratkaisukeskeinen kehittäjä, joka arvostaa selkeyttä, saavutettavuutta ja käytännön vaikuttavuutta.",
   skills: [
     "TypeScript",
     "React",
@@ -31,33 +28,29 @@ const PROFILE = {
       title: "Senior Frontend Developer",
       company: "Yritys Oy",
       period: "2023 – nyt",
-      bullets: [
-        "Johdin design system -uudistusta (Storybook, Tailwind).",
-        "Paransin LCP:ta 48% ja pienensin bundlea 30%.",
-        "Rakensin testikattavuuden 85%:iin (Vitest/RTL).",
-      ],
+      highlight:
+        "Vedin design system -uudistuksen ja paransin suorituskykyä (LCP −48%, bundle −30%).",
     },
     {
       title: "Full‑Stack Developer",
       company: "Toinen Firma Oy",
       period: "2021 – 2023",
-      bullets: [
-        "Rakensin Next.js + Prisma -pinolla sisäänkirjautumisen ja tilaukset.",
-        "Otin käyttöön GitHub Actions -putken (build, test, deploy).",
-      ],
+      highlight:
+        "Rakensin tilaus- ja autentikaatiopalvelun Next.js + Prisma -pinolla ja otin käyttöön CI/CD-putken.",
     },
   ],
   projects: [
     {
       name: "Projektinimi",
       description:
-        "Pieni kuvaus projektista, roolista ja tuloksista. Linkitä repo tai demo.",
+        "Lyhyt 1–2 lauseen kuvaus roolista, ongelmasta ja tuloksesta. Linkitä repo tai demo.",
       link: "https://example.com/project",
       tags: ["React", "Vite", "API"],
     },
     {
       name: "Toinen projekti",
-      description: "Lyhyt kuvaus. Mitä ratkaisit? Mitä teknologioita käytit?",
+      description:
+        "Lyhyt kuvaus. Mitä ratkaisit? Mitkä mitattavat vaikutukset saatiin?",
       link: "https://github.com/username/repo",
       tags: ["Node", "GraphQL"],
     },
@@ -71,190 +64,159 @@ const PROFILE = {
   ],
 };
 
-function useTheme() {
-  const [dark, setDark] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return (
-      localStorage.getItem("theme") === "dark" ||
-      (!localStorage.getItem("theme") &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    );
-  });
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (dark) {
-      root.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      root.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [dark]);
-
-  return { dark, setDark };
-}
-
 export default function App() {
-  const { dark, setDark } = useTheme();
-  const toggleTheme = () => setDark((d) => !d);
-  const onPrint = () => window.print();
-
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
-      <main className="mx-auto max-w-3xl px-4 py-10 print:py-0">
-        {/* Header */}
-        <motion.header
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="flex flex-col gap-6 rounded-2xl border border-zinc-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/60 print:border-0 print:shadow-none print:bg-white print:dark:bg-white"
-        >
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight">{PROFILE.name}</h1>
-              <p className="mt-1 text-lg text-zinc-600 dark:text-zinc-300">{PROFILE.role}</p>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">{PROFILE.location}</p>
+    <div className="min-h-screen bg-white text-zinc-900 dark:bg-black dark:text-zinc-50">
+      {/* Editorial subtle masthead halo */}
+      <div className="pointer-events-none absolute inset-0 [background:radial-gradient(60%_35%_at_50%_0%,rgba(24,24,27,0.06),transparent_60%)] dark:[background:radial-gradient(60%_35%_at_50%_0%,rgba(250,250,250,0.05),transparent_60%)]" />
+
+      <main className="relative mx-auto max-w-4xl px-6 py-14">
+        <Header />
+
+        {/* 2-column editorial grid */}
+        <div className="mt-12 grid gap-10 md:grid-cols-[1fr,1.2fr]">
+          <aside className="space-y-10">
+            <SectionTitle n="01">Yhteydet</SectionTitle>
+            <div className="text-sm leading-relaxed">
+              <LinkRow href={`mailto:${PROFILE.email}`}>{PROFILE.email}</LinkRow>
+              <LinkRow href={PROFILE.linkedin}>LinkedIn</LinkRow>
+              <LinkRow href={PROFILE.github}>GitHub</LinkRow>
+              <LinkRow href={PROFILE.website}>Website</LinkRow>
             </div>
-            <div className="flex gap-2 print:hidden">
-              <button
-                onClick={toggleTheme}
-                className="rounded-xl border px-3 py-1.5 text-sm shadow-sm transition active:scale-[.98] border-zinc-200 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
-                aria-label="Vaihda teema"
-              >
-                {dark ? "Light" : "Dark"}
-              </button>
-              <button
-                onClick={onPrint}
-                className="rounded-xl border px-3 py-1.5 text-sm shadow-sm transition active:scale-[.98] border-zinc-200 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
-              >
-                Lataa PDF
-              </button>
-            </div>
-          </div>
 
-          <p className="max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-            {PROFILE.summary}
-          </p>
+            <SectionTitle n="02">Taidot</SectionTitle>
+            <ul className="-m-1 flex flex-wrap">
+              {PROFILE.skills.map((s) => (
+                <li key={s} className="m-1 rounded-full border border-zinc-300 px-3 py-1 text-xs dark:border-zinc-700">
+                  {s}
+                </li>
+              ))}
+            </ul>
 
-          <div className="flex flex-wrap gap-3 text-sm">
-            <a className="link" href={`mailto:${PROFILE.email}`}>{PROFILE.email}</a>
-            <span className="text-zinc-400">•</span>
-            <a className="link" href={PROFILE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-            <span className="text-zinc-400">•</span>
-            <a className="link" href={PROFILE.github} target="_blank" rel="noreferrer">GitHub</a>
-            <span className="text-zinc-400">•</span>
-            <a className="link" href={PROFILE.website} target="_blank" rel="noreferrer">Website</a>
-          </div>
-        </motion.header>
+            <SectionTitle n="03">Koulutus</SectionTitle>
+            <ul className="space-y-3 text-sm">
+              {PROFILE.education.map((e) => (
+                <li key={e.school} className="flex items-baseline justify-between gap-3">
+                  <div>
+                    <p className="font-medium">{e.school}</p>
+                    <p className="text-zinc-600 dark:text-zinc-400">{e.degree}</p>
+                  </div>
+                  <span className="whitespace-nowrap text-zinc-500 dark:text-zinc-400">{e.period}</span>
+                </li>
+              ))}
+            </ul>
+          </aside>
 
-        {/* Skills */}
-        <Section title="Taidot">
-          <ul className="flex flex-wrap gap-2">
-            {PROFILE.skills.map((s) => (
-              <li
-                key={s}
-                className="rounded-full border px-3 py-1 text-sm border-zinc-200 dark:border-zinc-700"
-              >
-                {s}
-              </li>
-            ))}
-          </ul>
-        </Section>
+          <section className="space-y-10">
+            <SectionTitle n="04">Kokemus</SectionTitle>
+            <ExperienceTimeline />
 
-        {/* Experience */}
-        <Section title="Kokemus">
-          <div className="space-y-5">
-            {PROFILE.experience.map((exp) => (
-              <article
-                key={exp.title + exp.company}
-                className="rounded-2xl border p-5 shadow-sm border-zinc-200 dark:border-zinc-800"
-              >
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h3 className="text-lg font-semibold">
-                    {exp.title} · <span className="font-normal text-zinc-500 dark:text-zinc-400">{exp.company}</span>
-                  </h3>
-                  <span className="text-sm text-zinc-500 dark:text-zinc-400">{exp.period}</span>
-                </div>
-                <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-                  {exp.bullets.map((b, i) => (
-                    <li key={i}>{b}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </Section>
+            <SectionTitle n="05">Projektit</SectionTitle>
+            <ProjectsList />
+          </section>
+        </div>
 
-        {/* Projects */}
-        <Section title="Projektit">
-          <div className="grid gap-4 sm:grid-cols-2">
-            {PROFILE.projects.map((p) => (
-              <a
-                key={p.name}
-                href={p.link}
-                target="_blank"
-                rel="noreferrer"
-                className="group rounded-2xl border p-5 shadow-sm transition hover:shadow border-zinc-200 dark:border-zinc-800"
-              >
-                <h3 className="font-semibold group-hover:underline">{p.name}</h3>
-                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">{p.description}</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {p.tags.map((t) => (
-                    <span key={t} className="rounded-full border px-2 py-0.5 text-xs border-zinc-200 dark:border-zinc-700">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </a>
-            ))}
-          </div>
-        </Section>
-
-        {/* Education */}
-        <Section title="Koulutus">
-          <ul className="space-y-2">
-            {PROFILE.education.map((e) => (
-              <li key={e.school} className="flex items-baseline justify-between gap-2 rounded-2xl border p-4 shadow-sm border-zinc-200 dark:border-zinc-800">
-                <div>
-                  <p className="font-medium">{e.school}</p>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-300">{e.degree}</p>
-                </div>
-                <span className="text-sm text-zinc-500 dark:text-zinc-400">{e.period}</span>
-              </li>
-            ))}
-          </ul>
-        </Section>
-
-        <footer className="mt-10 mb-6 text-center text-xs text-zinc-500 print:hidden">
+        <footer className="mt-16 border-t border-zinc-200 pt-6 text-xs text-zinc-500 dark:border-zinc-800">
           © {new Date().getFullYear()} {PROFILE.name} · Päivitetty {new Date().toLocaleDateString()}
         </footer>
       </main>
 
-      {/* Little global styles for print + links */}
+      {/* Editorial tweaks */}
       <style>{`
-        @media print {
-          .print\\:hidden { display: none !important; }
-          .print\\:py-0 { padding-top: 0 !important; padding-bottom: 0 !important; }
-          main { max-width: 800px; }
-        }
-        .link { text-underline-offset: 4px; }
+        .serif { font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; }
+        .sans { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
       `}</style>
     </div>
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Header() {
   return (
-    <motion.section
+    <motion.header
       initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.35 }}
-      className="mt-8"
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="serif border-b border-zinc-200 pb-8 dark:border-zinc-800"
     >
-      <h2 className="mb-3 text-xl font-semibold">{title}</h2>
-      {children}
-    </motion.section>
+      <h1 className="text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+        {PROFILE.name}
+      </h1>
+      <p className="mt-1 text-lg text-zinc-600 dark:text-zinc-300">{PROFILE.role}</p>
+      <p className="text-sm text-zinc-500 dark:text-zinc-400">{PROFILE.location}</p>
+
+      <p className="sans mt-6 max-w-2xl text-[15px] leading-relaxed text-zinc-700 dark:text-zinc-300">
+        {PROFILE.summary}
+      </p>
+    </motion.header>
+  );
+}
+
+function SectionTitle({ n, children }: { n: string; children: React.ReactNode }) {
+  return (
+    <h2 className="sans mb-3 flex items-center gap-3 text-xs font-medium uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+      <span>{n}</span>
+      <span className="h-px w-10 bg-zinc-300 dark:bg-zinc-700" />
+      <span className="text-[13px] normal-case tracking-normal text-zinc-800 dark:text-zinc-100">{children}</span>
+    </h2>
+  );
+}
+
+function LinkRow({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a href={href} target="_blank" rel="noreferrer" className="group block">
+      <span className="underline decoration-zinc-300 underline-offset-4 group-hover:decoration-zinc-900 dark:decoration-zinc-700 dark:group-hover:decoration-zinc-100">
+        {children}
+      </span>
+    </a>
+  );
+}
+
+function ExperienceTimeline() {
+  return (
+    <div className="relative pl-6">
+      <span className="absolute left-2 top-0 bottom-0 w-px bg-zinc-200 dark:bg-zinc-800" />
+      {PROFILE.experience.map((exp, i) => (
+        <article key={i} className="relative pb-8">
+          <span className="absolute -left-[7px] mt-1 h-3 w-3 rounded-full bg-zinc-400 dark:bg-zinc-600" />
+          <div className="flex flex-wrap items-baseline justify-between gap-3">
+            <h3 className="font-semibold">
+              {exp.title}{" "}
+              <span className="font-normal text-zinc-500 dark:text-zinc-400">· {exp.company}</span>
+            </h3>
+            <span className="text-sm text-zinc-500 dark:text-zinc-400">{exp.period}</span>
+          </div>
+          <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">{exp.highlight}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function ProjectsList() {
+  return (
+    <div className="grid gap-6 sm:grid-cols-2">
+      {PROFILE.projects.map((p) => (
+        <a
+          key={p.name}
+          href={p.link}
+          target="_blank"
+          rel="noreferrer"
+          className="group overflow-hidden rounded-xl border border-zinc-200 transition dark:border-zinc-800"
+        >
+          <div className="aspect-[16/9] bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900" />
+          <div className="p-4">
+            <h3 className="font-medium tracking-tight group-hover:underline">{p.name}</h3>
+            <p className="mt-1 line-clamp-2 text-sm text-zinc-600 dark:text-zinc-300">{p.description}</p>
+            <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-zinc-600 dark:text-zinc-400">
+              {p.tags.map((t) => (
+                <span key={t} className="rounded-full border border-zinc-300 px-2 py-0.5 dark:border-zinc-700">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
   );
 }
