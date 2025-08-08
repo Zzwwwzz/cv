@@ -146,8 +146,6 @@ export default function App() {
             <div className="text-sm leading-6">
               <LinkRow href={`mailto:${PROFILE.email}`}>{PROFILE.email}</LinkRow>
               <LinkRow href={PROFILE.linkedin}>LINKEDIN</LinkRow>
-              <LinkRow href={PROFILE.github}>GITHUB</LinkRow>
-              <LinkRow href={PROFILE.website}>WEBSITE</LinkRow>
             </div>
 
             <SectionTitle n="02">TAIDOT</SectionTitle>
