@@ -189,7 +189,7 @@ export default function App() {
         </div>
 
         <footer className="mt-16 border-t-4 border-black pt-4 text-xs opacity-80 dark:border-white">
-          © {new Date().getFullYear()} {PROFILE.name} / Päivitetty {new Date().toLocaleDateString()}
+          © {new Date().getFullYear()} {PROFILE.name} / Updated {new Date().toLocaleDateString()}
         </footer>
       </main>
 
@@ -270,9 +270,7 @@ function ProjectsList() {
       {PROFILE.projects.map((p) => (
         <a
           key={p.name}
-          target="_blank"
-          rel="noreferrer"
-          className="group block border-4 border-black p-5 transition hover:-translate-y-0.5 dark:border-white"
+          className="group block border-4 border-black p-5 transition dark:border-white"
         >
           <div className="flex items-baseline justify-between">
             <h3 className="text-xl font-black leading-tight group-hover:underline">
