@@ -156,14 +156,17 @@ function Header() {
   );
 }
 
-function SectionTitle({ n, children, accent }: { n: string; children: React.ReactNode; accent?: boolean }) {
+function SectionTitle(
+  { n, children, accent = false }:
+  { n: string; children: React.ReactNode; accent?: boolean }
+) {
   return (
     <div className="flex items-center gap-3">
       <span className="text-xs font-medium tracking-widest text-zinc-500 dark:text-zinc-400">{n}</span>
-      <span className="h-px w-10 bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-rose-400 opacity-60" />
-      <h2 className="text-[13px] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-        {children}
-      </h2>
+      <span className={accent
+        ? "h-px w-10 bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-rose-400 opacity-60"
+        : "h-px w-10 bg-zinc-300 dark:bg-zinc-700"} />
+      <h2 className="text-[13px] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">{children}</h2>
     </div>
   );
 }
