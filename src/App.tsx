@@ -1,7 +1,43 @@
+import React from "react";
 import { motion } from "framer-motion";
 
-// --- EDIT HERE ---
-const PROFILE = {
+// -----------------------------
+// DATA (edit these)
+// -----------------------------
+interface ExperienceItem {
+  title: string;
+  company: string;
+  period: string;
+  highlight: string;
+}
+interface ProjectItem {
+  name: string;
+  description: string;
+  link: string;
+  tags: string[];
+}
+interface EducationItem {
+  school: string;
+  degree: string;
+  period: string;
+}
+interface Profile {
+  name: string;
+  role: string;
+  location: string;
+  email: string;
+  phone: string;
+  website: string;
+  linkedin: string;
+  github: string;
+  summary: string;
+  skills: string[];
+  experience: ExperienceItem[];
+  projects: ProjectItem[];
+  education: EducationItem[];
+}
+
+const PROFILE: Profile = {
   name: "Etunimi Sukunimi",
   role: "OHJELMISTOKEHITTÄJÄ / FULL‑STACK",
   location: "Helsinki, FI",
@@ -49,8 +85,7 @@ const PROFILE = {
     },
     {
       name: "Toinen projekti",
-      description:
-        "Lyhyt kuvaus. Mitä ratkaisit? Mitä mitattiin?",
+      description: "Lyhyt kuvaus. Mitä ratkaisit? Mitä mitattiin?",
       link: "https://github.com/username/repo",
       tags: ["NODE", "GRAPHQL"],
     },
@@ -64,17 +99,20 @@ const PROFILE = {
   ],
 };
 
+// -----------------------------
+// APP (Brutalist B&W)
+// -----------------------------
 export default function App() {
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white">
       <main className="mx-auto max-w-5xl px-6 py-12">
         <Header />
 
-        {/* BRUTAL GRID */}
-        <div className="mt-10 grid gap-8 md:grid-cols-[1fr,1.15fr]">
+        {/* Layout: aside + main content */}
+        <div className="mt-10 grid gap-8 md:grid-cols-2 md:[grid-template-columns:1fr_1.15fr]">
           <aside className="space-y-8">
             <SectionTitle n="01">YHTEYDET</SectionTitle>
-            <div className="text-sm leading-relaxed">
+            <div className="text-sm leading-6">
               <LinkRow href={`mailto:${PROFILE.email}`}>{PROFILE.email}</LinkRow>
               <LinkRow href={PROFILE.linkedin}>LINKEDIN</LinkRow>
               <LinkRow href={PROFILE.github}>GITHUB</LinkRow>
@@ -84,21 +122,29 @@ export default function App() {
             <SectionTitle n="02">TAIDOT</SectionTitle>
             <ul className="-m-1 flex flex-wrap">
               {PROFILE.skills.map((s) => (
-                <li key={s} className="m-1 border-2 border-black px-2 py-0.5 text-[11px] dark:border-white font-mono">
+                <li
+                  key={s}
+                  className="m-1 border-2 border-black px-2 py-0.5 text-[11px] font-mono dark:border-white"
+                >
                   [{s.toUpperCase()}]
                 </li>
               ))}
             </ul>
 
             <SectionTitle n="03">KOULUTUS</SectionTitle>
-            <ul className="divide-y-2 divide-black dark:divide-white border-2 border-black dark:border-white">
+            <ul className="border-2 border-black dark:border-white divide-y-2 divide-black dark:divide-white">
               {PROFILE.education.map((e) => (
-                <li key={e.school} className="flex items-baseline justify-between gap-3 px-4 py-3">
+                <li
+                  key={e.school}
+                  className="flex items-baseline justify-between gap-3 px-4 py-3"
+                >
                   <div>
                     <p className="font-semibold tracking-tight">{e.school}</p>
                     <p className="text-sm opacity-70">{e.degree}</p>
                   </div>
-                  <span className="whitespace-nowrap text-sm opacity-70">{e.period}</span>
+                  <span className="whitespace-nowrap text-sm opacity-70">
+                    {e.period}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -106,7 +152,7 @@ export default function App() {
 
           <section className="space-y-10">
             <SectionTitle n="04">KOKEMUS</SectionTitle>
-            <ExperienceTimeline />
+            <ExperienceList />
 
             <SectionTitle n="05">PROJEKTIT</SectionTitle>
             <ProjectsList />
@@ -118,6 +164,7 @@ export default function App() {
         </footer>
       </main>
 
+      {/* Small helpers */}
       <style>{`
         .title { letter-spacing: -0.02em; }
         .allcaps { letter-spacing: 0.06em; }
@@ -140,53 +187,48 @@ function Header() {
         <h1 className="title text-4xl font-black leading-tight md:text-5xl">
           {PROFILE.name}
         </h1>
-        <p className="allcaps text-xs font-bold">{PROFILE.role}</p>
+        <p className="allcaps text-xs font-extrabold">{PROFILE.role}</p>
         <p className="text-sm opacity-70">{PROFILE.location}</p>
       </div>
 
-      <p className="mt-5 max-w-3xl text-[15px] leading-relaxed">
-        {PROFILE.summary}
-      </p>
+      <p className="mt-5 max-w-3xl text-[15px] leading-relaxed">{PROFILE.summary}</p>
     </motion.header>
   );
 }
 
 function SectionTitle({ n, children }: { n: string; children: React.ReactNode }) {
   return (
-    <div>
-      <div className="mb-2 flex items-center gap-3">
-        <span className="allcaps inline-flex h-6 min-w-[2.5rem] items-center justify-center border-2 border-black px-2 text-[11px] font-bold dark:border-white">
-          {n}
-        </span>
-        <h2 className="allcaps text-[12px] font-extrabold">{children}</h2>
-      </div>
-      <div className="h-2 w-full border-y-2 border-black dark:border-white" />
+    <div className="mb-2 grid grid-cols-[auto_1fr] items-center gap-3">
+      <span className="inline-flex h-7 min-w-[2.7rem] items-center justify-center border-4 border-black px-2 text-[11px] font-black tracking-widest dark:border-white">
+        {n}
+      </span>
+      <h2 className="text-[20px] font-extrabold leading-none tracking-tight">{children}</h2>
+      <div className="col-span-2 mt-2 h-2 w-full border-y-4 border-black dark:border-white" />
     </div>
   );
 }
 
 function LinkRow({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noreferrer" className="block font-semibold">
+    <a href={href} target="_blank" rel="noreferrer" className="block font-semibold leading-6">
       {children}
     </a>
   );
 }
 
-function ExperienceTimeline() {
+function ExperienceList() {
   return (
-    <div className="relative pl-8">
-      <span className="absolute left-0 top-0 bottom-0 w-2 bg-black dark:bg-white" />
-      {PROFILE.experience.map((exp, i) => (
-        <article key={i} className="relative border-b-2 border-black py-5 last:border-b-0 dark:border-white">
-          <span className="absolute -left-2 top-6 h-4 w-4 bg-black dark:bg-white" />
-          <div className="flex flex-wrap items-baseline justify-between gap-3">
-            <h3 className="text-base font-extrabold">
-              {exp.title} <span className="opacity-70">· {exp.company}</span>
-            </h3>
-            <span className="text-sm opacity-70">{exp.period}</span>
+    <div className="border-4 border-black dark:border-white divide-y-4 divide-black dark:divide-white">
+      {PROFILE.experience.map((exp) => (
+        <article key={`${exp.title}-${exp.company}`} className="grid grid-cols-1 gap-3 p-5 md:grid-cols-[9rem_1fr]">
+          <div className="md:border-r-4 md:border-black md:pr-4 dark:md:border-white">
+            <p className="text-sm font-bold">{exp.period}</p>
+            <p className="text-xs opacity-70">{exp.company}</p>
           </div>
-          <p className="mt-2 text-sm">{exp.highlight}</p>
+          <div>
+            <h3 className="text-lg font-black tracking-tight">{exp.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed">{exp.highlight}</p>
+          </div>
         </article>
       ))}
     </div>
@@ -202,16 +244,22 @@ function ProjectsList() {
           href={p.link}
           target="_blank"
           rel="noreferrer"
-          className="group block border-4 border-black p-4 transition dark:border-white"
+          className="group block border-4 border-black p-5 transition hover:-translate-y-0.5 dark:border-white"
         >
-          <h3 className="title text-lg font-black leading-tight group-hover:underline">
-            {p.name}
-          </h3>
+          <div className="flex items-baseline justify-between">
+            <h3 className="text-xl font-black leading-tight group-hover:underline">
+              {p.name}
+            </h3>
+            <span className="text-xs font-bold opacity-70">→</span>
+          </div>
           <p className="mt-2 text-sm">{p.description}</p>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-3 grid auto-cols-max grid-flow-col gap-2">
             {p.tags.map((t) => (
-              <span key={t} className="font-mono text-[11px]">
-                [{t}]
+              <span
+                key={t}
+                className="border-2 border-black px-2 py-0.5 text-[11px] font-mono dark:border-white"
+              >
+                {t}
               </span>
             ))}
           </div>
