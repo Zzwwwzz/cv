@@ -105,7 +105,7 @@ const PROFILE: Profile = {
 export default function App() {
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white">
-      <main className="mx-auto max-w-5xl px-6 py-12">
+      <main className="mx-auto w-full max-w-none px-6 md:px-10 lg:px-16 xl:px-24 py-12">
         <Header />
 
         {/* Layout: aside + main content */}
@@ -237,7 +237,7 @@ function ExperienceList() {
 
 function ProjectsList() {
   return (
-    <div className="grid gap-6 sm:grid-cols-2">
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {PROFILE.projects.map((p) => (
         <a
           key={p.name}
