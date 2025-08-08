@@ -142,13 +142,13 @@ export default function App() {
         {/* Layout: aside + main content */}
         <div className="mt-10 grid gap-8 md:grid-cols-2 md:[grid-template-columns:1fr_1.15fr]">
           <aside className="space-y-8">
-            <SectionTitle n="01">YHTEYDET</SectionTitle>
+            <SectionTitle n="01">CONTECT</SectionTitle>
             <div className="text-sm leading-6">
               <LinkRow href={`mailto:${PROFILE.email}`}>{PROFILE.email}</LinkRow>
               <LinkRow href={PROFILE.linkedin}>LINKEDIN</LinkRow>
             </div>
 
-            <SectionTitle n="02">TAIDOT</SectionTitle>
+            <SectionTitle n="02">SKILLS</SectionTitle>
             <ul className="-m-1 flex flex-wrap">
               {PROFILE.skills.map((s) => (
                 <li
@@ -160,7 +160,7 @@ export default function App() {
               ))}
             </ul>
 
-            <SectionTitle n="03">KOULUTUS</SectionTitle>
+            <SectionTitle n="03">EDUCATION</SectionTitle>
             <ul className="border-2 border-black dark:border-white divide-y-2 divide-black dark:divide-white">
               {PROFILE.education.map((e) => (
                 <li
@@ -180,10 +180,10 @@ export default function App() {
           </aside>
 
           <section className="space-y-10">
-            <SectionTitle n="04">KOKEMUS</SectionTitle>
+            <SectionTitle n="04">EXPERIENCE</SectionTitle>
             <ExperienceList />
 
-            <SectionTitle n="05">PROJEKTIT</SectionTitle>
+            <SectionTitle n="05">PROJECTS</SectionTitle>
             <ProjectsList />
           </section>
         </div>
