@@ -82,21 +82,21 @@ const PROFILE: Profile = {
         "Embedded software developer, with focus on functional safety, testing, and CI/CD. Some Full Stack projects",
     },
     {
-      title: "Junior Structural Engineer",
+      title: "JUNIOR STRUCTURAL ENGINEER",
       company: "Ramboll Finalnd Oy",
       period: "2018 - 2022",
       highlight:
         "Building surveys and building refurbishment design. Automation tools for survey data.",
     },
     {
-      title: "Course Assistant",
+      title: "COURSE ASSISTANT",
       company: "Tampere University",
       period: "2018 - 2019",
       highlight:
         "Course assistant for C++, and C++ data structures and algorithms courses. Course assistant for statics course.",
     },
     {
-      title: "Construction worker",
+      title: "CONSTRUCTION WORKER",
       company: "Varies",
       period: "2013 - 2017",
       highlight:
@@ -281,7 +281,7 @@ function ProjectsList() {
             <span className="text-xs font-bold opacity-70">→</span>
           </div>
           <p className="mt-2 text-sm">{p.description}</p>
-          <div className="mt-3 grid auto-cols-max grid-flow-col gap-2">
+          <div className="mt-3 flex flex-wrap gap-2"> 
             {p.tags.map((t) => (
               <span
                 key={t}
