@@ -1,9 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-// -----------------------------
-// DATA (edit these)
-// -----------------------------
 interface ExperienceItem {
   title: string;
   company: string;
@@ -13,7 +10,6 @@ interface ExperienceItem {
 interface ProjectItem {
   name: string;
   description: string;
-  link: string;
   tags: string[];
 }
 interface EducationItem {
@@ -27,9 +23,7 @@ interface Profile {
   location: string;
   email: string;
   phone: string;
-  website: string;
   linkedin: string;
-  github: string;
   summary: string;
   skills: string[];
   experience: ExperienceItem[];
@@ -37,70 +31,107 @@ interface Profile {
   education: EducationItem[];
 }
 
+// -----------------------------
+// DATA
+// -----------------------------
+
 const PROFILE: Profile = {
-  name: "Etunimi Sukunimi",
-  role: "OHJELMISTOKEHITTÄJÄ / FULL‑STACK",
-  location: "Helsinki, FI",
-  email: "etunimi.sukunimi@email.com",
-  phone: "+358 40 123 4567",
-  website: "https://example.com",
-  linkedin: "https://linkedin.com/in/username",
-  github: "https://github.com/username",
+  name: "JANI HARTIKAINEN",
+  role: "SOFTWARE DEVELOPER",
+  location: "Tampere, FI",
+  email: "hartjani@hotmail.com",
+  phone: "[REDACTED]",
+  linkedin: "https://linkedin.com/in/hartjani",
   summary:
-    "Rakennan suorituskykyisiä ja saavutettavia web-sovelluksia. Kiinnostuksen kohteet: DX, typografia käyttöliittymissä ja pieni mutta mitattava vaikutus.",
+    "Versatile M.Sc. in Civil Engineering with a background in Computer Science, eager to quickly learn new languages and frameworks.",
   skills: [
+    "C",
+    "C++",
+    "Python",
+    "JavaScript",
     "TypeScript",
     "React",
     "Next.js",
     "Node.js",
     "GraphQL",
+    "Bash",
+    ".NET",
     "PostgreSQL",
+    "CAN",
+    "CODESYS",
+    "YOCTO",
+    "QT",
+    "Linux",
+    "Jenkins",
     "Docker",
+    "AWS",
+    "GIT",
+    "Terraform",
+    "REST API",
     "CI/CD",
     "Accessibility",
+    "ADOBE CC",
+    "MS365",
   ],
   experience: [
     {
-      title: "Senior Frontend Developer",
-      company: "Yritys Oy",
-      period: "2023 – nyt",
+      title: "SOFTWARE DEVELOPER",
+      company: "Technion Oy",
+      period: "2022 -> ",
       highlight:
-        "Design system -vastuu. LCP −48 %, bundle −30 %. Testikattavuus 85 %.",
+        "Embedded software developer, with focus on functional safety, testing, and CI/CD. Some Full Stack projects",
     },
     {
-      title: "Full‑Stack Developer",
-      company: "Toinen Firma Oy",
-      period: "2021 – 2023",
+      title: "Junior Structural Engineer",
+      company: "Ramboll Finalnd Oy",
+      period: "2018 - 2022",
       highlight:
-        "Tilaukset + auth Next.js/Prisma. CI/CD GitHub Actionsiin.",
+        "Building surveys and building refurbishment design. Automation tools for survey data.",
     },
+    {
+      title: "Course Assistant",
+      company: "Tampere University",
+      period: "2018 - 2019",
+      highlight:
+        "Course assistant for C++, and C++ data structures and algorithms courses. Course assistant for statics course.",
+    },
+    {
+      title: "Construction worker",
+      company: "Varies",
+      period: "2013 - 2017",
+      highlight:
+        "Course assistant for C++, and C++ data structures and algorithms courses. Course assistant for statics course.",
+    },    
   ],
   projects: [
     {
-      name: "Projektinimi",
+      name: "forklift",
       description:
-        "1–2 lauseen kuvaus roolista, ongelmasta ja vaikutuksesta. Linkki repo/demoon.",
-      link: "https://example.com/project",
-      tags: ["REACT", "VITE", "API"],
+        "Developing safety critial code in C, testing with MATCH, Creating pipeline w/ CI/CD, Jenkins, Terraform",
+      tags: ["C", "safety critial", "CI/CD", "Jenkins", "Terraform", "MATCH", "CAN"],
     },
     {
-      name: "Toinen projekti",
-      description: "Lyhyt kuvaus. Mitä ratkaisit? Mitä mitattiin?",
-      link: "https://github.com/username/repo",
-      tags: ["NODE", "GRAPHQL"],
+      name: "trains, FS",
+      description: "Developing full stack, stress testing, and developing in C",
+      tags: ["REACT", "POSTGRESQL", "TS", "C", "REST API", "Testing", "CAN"],
+    },
+    {
+      name: "trains, legacy",
+      description: "Debugging and maintenance of legacy",
+      tags: ["C", "Java", "Testing", "RS485", "CAN", "Debugging"],
     },
   ],
   education: [
     {
-      school: "Aalto-yliopisto",
-      degree: "DI, Tietotekniikka",
-      period: "2017 – 2022",
+      school: "Tampere University",
+      degree: "M.Sc., Civil engineering",
+      period: "2013 - 2021",
     },
   ],
 };
 
 // -----------------------------
-// APP (Brutalist B&W)
+// APP 
 // -----------------------------
 export default function App() {
   return (
@@ -241,7 +272,6 @@ function ProjectsList() {
       {PROFILE.projects.map((p) => (
         <a
           key={p.name}
-          href={p.link}
           target="_blank"
           rel="noreferrer"
           className="group block border-4 border-black p-5 transition hover:-translate-y-0.5 dark:border-white"
